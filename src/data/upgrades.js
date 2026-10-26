@@ -18,15 +18,15 @@ export const ROOMS = [
       { name: 'King-size bed', cost: 1_500_000, img: room('bed_3'), size: 1 } ] },
     { id: 'bdeco', name: 'Wall art', icon: '🖼️', box: { x: 66, y: 12, w: 24, h: 30 }, levels: [
       { name: 'Bare wall', cost: 0, img: null },
-      { name: 'Cute poster', cost: 60_000, img: room('bdeco_1') },
+      { name: 'Cute poster', cost: 60_000, img: room('bdeco_1'), size: 0.8 },
       { name: 'Framed photo', cost: 250_000, img: room('bdeco_2') },
       { name: 'Ukiyo-e print', cost: 900_000, img: room('bdeco_3') } ] },
   ] },
   { id: 'office', name: 'Home office', pic: 'room_office', bg: room('office_bg'), slots: [
     { id: 'desk', name: 'Desk', icon: '🖥️', box: { x: 22, y: 30, w: 52, h: 56 }, levels: [
-      { name: 'Low table', cost: 0, img: room('desk_0') },
-      { name: 'Study desk', cost: 150_000, img: room('desk_1') },
-      { name: 'Desk with PC', cost: 600_000, img: room('desk_2') },
+      { name: 'Low table', cost: 0, img: room('desk_0'), size: 0.8 },
+      { name: 'Study desk', cost: 150_000, img: room('desk_1'), size: 0.78 },
+      { name: 'Desk with PC', cost: 600_000, img: room('desk_2'), size: 0.88 },
       { name: 'Executive desk', cost: 2_000_000, img: room('desk_3') } ] },
     { id: 'odeco', name: 'Corner', icon: '📚', box: { x: 72, y: 24, w: 20, h: 64 }, levels: [
       { name: 'Empty corner', cost: 0, img: null },
