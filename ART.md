@@ -20,19 +20,14 @@ or a dashed box with the item's name), so pictures can be added one at a time.
 Attach one picture from this game as a style reference, e.g. `img/a_rest.webp` or `img/ev_u_hostel.webp`.
 Generate all pictures for one room in the same Gemini chat so they match.
 
-**Camera angle matters most.** Everything is seen **from the front, slightly from above** (about 15°),
-looking straight at the back wall. No side walls, no dramatic perspective. Furniture must use the same angle.
+**Camera angle matters most.** Everything uses the same **isometric three-quarter view from the front-left,
+slightly above**: rooms are cutaway corners (left wall, right wall, diamond floor, no ceiling), and furniture
+is drawn at that same angle. Attach the beds picture (`img/room/bed_3.webp`) as the angle reference.
 
 ## Room backgrounds (3 pictures) ✅ done
 
-Landscape, 4:3 (e.g. 1200×900). An **empty** room: back wall on the top ~55%, floor on the bottom ~45%.
-No furniture, no people, no text.
-
-| File | Prompt (after the style line) |
-|---|---|
-| `bedroom_bg` | Empty small Japanese bedroom seen from the front. Back wall with soft cream wallpaper and a small window on the left, light wooden floor. Keep the upper-right part of the wall plain (a picture will hang there). No furniture. 4:3. |
-| `office_bg` | Empty home office seen from the front. Back wall in pale sage green with a window in the middle-left, wooden floor. Keep the right side plain. No furniture. 4:3. |
-| `living_bg` | Empty Japanese living room seen from the front. Warm beige back wall with a large window with curtains in the middle, wooden floor with a little tatami area. Keep the left side plain. No furniture. 4:3. |
+Isometric cutaway rooms on a white background; the tool makes the white around the room transparent.
+`bedroom_bg`, `office_bg`, `living_bg` (window on the left wall, right wall kept plain).
 
 ## Furniture (6 sheets, 4 items each)
 

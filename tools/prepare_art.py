@@ -7,7 +7,8 @@
   With 2-4 names, the picture is a 2x2 grid of items, read left to right, top to bottom
   (top-left, top-right, bottom-left, bottom-right). It's split along the white gaps between them.
 
-Room backgrounds (names ending in _bg) are cropped to 4:3 and resized to 1200x900.
+Room backgrounds (names ending in _bg) are cropped to 4:3 and resized to 1200x900; the white
+area around a cutaway room is made transparent.
 Furniture: the plain white (or light) background around the item is made transparent,
 the empty edges are trimmed, and it's resized to at most 800px. White parts *inside*
 the item's outline are kept.
@@ -30,10 +31,12 @@ def background(img):
     else:               # too tall: crop top and bottom
         nh = round(w / target)
         img = img.crop((0, (h - nh) // 2, w, (h - nh) // 2 + nh))
-    return img.convert('RGB').resize((1200, 900), Image.LANCZOS)
+    img = img.convert('RGB').resize((1200, 900), Image.LANCZOS)
+    return cut_out(img)
 
 
-def furniture(img):
+def cut_out(img):
+    """Make the light background touching the picture's edges transparent."""
     rgb = img.convert('RGB')
     w, h = rgb.size
     # Flood-fill the background from points all around the border.
@@ -53,6 +56,12 @@ def furniture(img):
     alpha = alpha.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8))
     out = img.convert('RGBA')
     out.putalpha(alpha)
+    return out
+
+
+def furniture(img):
+    out = cut_out(img)
+    alpha = out.getchannel('A')
     bbox = alpha.point(lambda v: 255 if v > 20 else 0).getbbox()
     if bbox:
         out = out.crop(bbox)
