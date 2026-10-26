@@ -36,14 +36,14 @@ export const ROOMS = [
       { name: 'Bonsai display', cost: 1_200_000, img: room('odeco_3'), size: 0.8 } ] },
   ] },
   { id: 'living', name: 'Living room', pic: 'room_living', bg: room('living_bg'), slots: [
-    { id: 'sofa', name: 'Seating', icon: '🛋️', box: { x: 30, y: 50, w: 44, h: 42 }, levels: [
-      { name: 'Floor cushion', cost: 0, img: room('sofa_0') },
-      { name: 'Kotatsu table', cost: 200_000, img: room('sofa_1') },
-      { name: 'Comfy sofa', cost: 700_000, img: room('sofa_2') },
+    { id: 'sofa', name: 'Seating', icon: '🛋️', box: { x: 22, y: 51, w: 44, h: 42 }, levels: [
+      { name: 'Floor cushion', cost: 0, img: room('sofa_0'), size: 0.62 },
+      { name: 'Kotatsu table', cost: 200_000, img: room('sofa_1'), size: 0.78 },
+      { name: 'Comfy sofa', cost: 700_000, img: room('sofa_2'), size: 0.9 },
       { name: 'Leather sofa set', cost: 2_500_000, img: room('sofa_3') } ] },
-    { id: 'ldeco', name: 'Feature', icon: '🐟', box: { x: 55, y: 22, w: 17, h: 44 }, levels: [
+    { id: 'ldeco', name: 'Feature', icon: '🐟', box: { x: 54, y: 18, w: 24, h: 46 }, levels: [
       { name: 'Empty corner', cost: 0, img: null },
-      { name: 'Floor lamp', cost: 80_000, img: room('ldeco_1') },
+      { name: 'Floor lamp', cost: 80_000, img: room('ldeco_1'), size: 0.5 },
       { name: 'Big TV', cost: 400_000, img: room('ldeco_2') },
       { name: 'Koi aquarium', cost: 1_500_000, img: room('ldeco_3') } ] },
   ] },
