@@ -84,7 +84,7 @@ export function rentFx(payments, before, after) {
   });
 }
 
-// Spending: the cash box shows "−¥…" in red.
-export function spendFx(amount) {
-  floatText(cashBox(), `−${yen(amount)}`, 'loss');
+// Spending: "−¥…" in red rises from the button you tapped (or the cash box).
+export function spendFx(amount, from = cashBox()) {
+  floatText(from, `−${yen(amount)}`, 'loss');
 }

@@ -7,7 +7,8 @@ import { drawPanel } from './render/panel.js';
 import { drawSheet } from './render/sheet.js';
 import { createTimebar } from './render/timebar.js';
 import { rentFx, spendFx } from './render/fx.js';
-import { cityNews } from './render/toast.js';
+import { cityNews, toast } from './render/toast.js';
+import { upgrade, homeTier } from './home.js';
 
 // Real seconds per in-game month.
 const SECONDS_PER_MONTH = 10;
@@ -46,14 +47,22 @@ function update(dt) {
   }
 }
 
-// Button handlers, keyed by data-act. id comes from data-id.
+// Button handlers, keyed by data-act. id comes from data-id; btn is the button tapped.
 const ACT = {
   pause: () => { s.paused = !s.paused; },
   open: id => { ui.sheet = id; },
   close: () => { ui.sheet = null; },
-  buy: id => buy(s, id) && spendFx(building(id).price),
-  renovate: id => renovate(s, id) && spendFx(building(id).reno),
+  buy: (id, btn) => buy(s, id) && spendFx(building(id).price, btn),
+  renovate: (id, btn) => renovate(s, id) && spendFx(building(id).reno, btn),
   rent: id => rentOut(s, id),
+  upgrade: (id, btn) => {
+    const tier = homeTier(s);
+    const cost = upgrade(s, id);
+    if (!cost) return;
+    spendFx(cost, btn);
+    const now = homeTier(s);
+    if (now !== tier) toast(`🏠 You moved into a <b>${now.name.toLowerCase()}</b>!`, now.pic);
+  },
 };
 
 document.addEventListener('click', e => {
@@ -63,7 +72,7 @@ document.addEventListener('click', e => {
   if (e.target.id === 'modal') { ACT.close(); render(); return; }
   const btn = e.target.closest('[data-act]');
   if (!btn || btn.disabled) return;
-  ACT[btn.dataset.act]?.(btn.dataset.id);
+  ACT[btn.dataset.act]?.(btn.dataset.id, btn);
   render();
 });
 

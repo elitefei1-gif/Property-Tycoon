@@ -10,6 +10,14 @@ export const PICS = {
   afford: 'img/h_afford.webp',
   semid: 'img/h_semid.webp',
   flat: 'img/h_flat.webp',
+  // home
+  room_bed: 'img/a_rest.webp',
+  room_office: 'img/a_overtime.webp',
+  room_living: 'img/a_social.webp',
+  home_room: 'img/ev_u_hostel.webp',
+  home_apt: 'img/h_apt.webp',
+  home_house: 'img/h_jb.webp',
+  home_mansion: 'img/h_bungalow.webp',
   // tenants
   ten_office: 'img/partner_f__japanese.webp',
   ten_student_m: 'img/partner_m__korean.webp',
