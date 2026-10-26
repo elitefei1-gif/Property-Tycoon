@@ -4,16 +4,18 @@
 // box = where a slot's furniture sits, in % of the room picture: x/y = top-left corner, w/h = size.
 // The furniture picture is fitted inside the box, standing on its bottom edge.
 // img = the furniture picture for that level (null = nothing there). Missing files show a placeholder.
+// size = how wide the picture is, as a share of the box width (default 1 = full width), so bigger
+// furniture looks bigger. Pictures stand on the bottom of the box and may poke out of its top.
 // See ART.md for the list of pictures and how to make them.
 const room = name => `img/room/${name}.webp`;
 
 export const ROOMS = [
   { id: 'bedroom', name: 'Bedroom', pic: 'room_bed', bg: room('bedroom_bg'), slots: [
     { id: 'bed', name: 'Bed', icon: '🛏️', box: { x: 22, y: 42, w: 56, h: 50 }, levels: [
-      { name: 'Thin futon', cost: 0, img: room('bed_0') },
-      { name: 'Thick futon', cost: 120_000, img: room('bed_1') },
-      { name: 'Wooden bed', cost: 450_000, img: room('bed_2') },
-      { name: 'King-size bed', cost: 1_500_000, img: room('bed_3') } ] },
+      { name: 'Thin futon', cost: 0, img: room('bed_0'), size: 0.72 },
+      { name: 'Thick futon', cost: 120_000, img: room('bed_1'), size: 0.8 },
+      { name: 'Wooden bed', cost: 450_000, img: room('bed_2'), size: 0.78 },
+      { name: 'King-size bed', cost: 1_500_000, img: room('bed_3'), size: 1 } ] },
     { id: 'bdeco', name: 'Wall art', icon: '🖼️', box: { x: 66, y: 12, w: 24, h: 30 }, levels: [
       { name: 'Bare wall', cost: 0, img: null },
       { name: 'Cute poster', cost: 60_000, img: room('bdeco_1') },

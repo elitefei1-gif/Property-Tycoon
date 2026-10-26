@@ -34,7 +34,7 @@ function furniturePiece(sl, s) {
   const inner = lv.img ? furniture(sl, lv) : `<span class="spot">＋<small>${sl.name}</small></span>`;
   return `
     <button class="piece ${canUp ? 'can-up' : ''}" data-act="slot" data-id="${sl.id}"
-      style="left:${x}%;top:${y}%;width:${w}%;height:${h}%" aria-label="${sl.name}: ${lv.name}">
+      style="left:${x}%;top:${y}%;width:${w}%;height:${h}%;--size:${lv.size ?? 1}" aria-label="${sl.name}: ${lv.name}">
       ${inner}
     </button>`;
 }

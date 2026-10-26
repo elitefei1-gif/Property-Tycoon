@@ -45,11 +45,15 @@ Square picture (e.g. 1024×1024), **plain pure white background**, items well ap
 no floor, no shadows on the background, no text or labels. Same front, slightly-from-above angle as the rooms.
 White parts (bedding, paper) need a dark outline so they don't get cut out.
 
-Where each item sits in the room is set in `src/data/upgrades.js` (`box`).
+**Angle for furniture:** the beds sheet set the look: a three-quarter view from the front-left, slightly
+above. Attach `img/room/bed_3.webp` (or the beds sheet) to the other furniture prompts and add
+*"same angle and style as the attached beds"*, so all the furniture matches.
+
+Where each item sits in the room is set in `src/data/upgrades.js` (`box`), and how big it looks with `size`.
 
 | Sheet | Prompt (after the style line) | Files (in grid order) |
 |---|---|---|
-| Beds | A 2×2 grid of four separate beds on a plain white background, each centred in its own quarter with lots of white space between them. Top-left: a thin, flat, slightly worn futon on the floor with a small pillow. Top-right: a thick fluffy futon with a patterned duvet and two pillows. Bottom-left: a simple wooden single bed with a cosy quilt. Bottom-right: a luxurious king-size bed with a padded headboard and many pillows. All seen from the front, slightly from above, same scale. No floor, no shadows, no text. | `bed_0 bed_1 bed_2 bed_3` |
+| Beds ✅ done | A 2×2 grid of four separate beds on a plain white background, each centred in its own quarter with lots of white space between them. Top-left: a thin, flat, slightly worn futon on the floor with a small pillow. Top-right: a thick fluffy futon with a patterned duvet and two pillows. Bottom-left: a simple wooden single bed with a cosy quilt. Bottom-right: a luxurious king-size bed with a padded headboard and many pillows. All seen from the front, slightly from above, same scale. No floor, no shadows, no text. | `bed_0 bed_1 bed_2 bed_3` |
 | Bedroom wall art | A 2×2 grid on a plain white background, three wall decorations, each centred in its own quarter, the bottom-right quarter left empty. Top-left: a cute cartoon cat poster. Top-right: a wooden frame with a happy family photo. Bottom-left: a framed ukiyo-e wave print in the style of the Great Wave. Seen straight from the front. No wall, no shadows, no text. | `bdeco_1 bdeco_2 bdeco_3` |
 | Desks | A 2×2 grid of four separate desks on a plain white background, each centred in its own quarter with lots of white space between them. Top-left: a low wooden Japanese table with a floor cushion and a notebook. Top-right: a small study desk with a chair, a lamp and books. Bottom-left: a desk with a computer monitor, keyboard and an office chair. Bottom-right: a big executive desk in dark wood with two monitors and a leather chair. All seen from the front, slightly from above, same scale. No floor, no shadows, no text. | `desk_0 desk_1 desk_2 desk_3` |
 | Office corner | A 2×2 grid on a plain white background, three tall items, each centred in its own quarter, the bottom-right quarter left empty. Top-left: a potted plant in a ceramic pot. Top-right: a tall wooden bookshelf full of books and folders. Bottom-left: a bonsai tree on a wooden display stand. Seen from the front, slightly from above. No floor, no shadows, no text. | `odeco_1 odeco_2 odeco_3` |
