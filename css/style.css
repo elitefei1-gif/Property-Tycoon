@@ -228,3 +228,6 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .arrow { font-size: 22px; color: var(--red); }
 .sheet h2 .pips { vertical-align: middle; margin-left: 4px; }
 @media (prefers-reduced-motion: reduce) { .piece { transition: none; } .piece.can-up::after { animation: none; } }
+#ev-title { display: flex; align-items: center; gap: 10px; }
+#ev-title .face { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid var(--gold); background: var(--surface2); flex: none; }
+.tag.event { justify-self: start; }

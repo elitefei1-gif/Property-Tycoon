@@ -22,6 +22,12 @@ export const PICS = {
   inv_buyer: 'img/ev_biz_buyer.webp',
   inv_tip: 'img/a_invest.webp',
   inv_gift: 'img/m_money.webp',
+  // tenant events
+  ev_leak: 'img/ev_t_roof.webp',
+  ev_noise: 'img/ev_gaming.webp',
+  ev_late: 'img/ev_debt.webp',
+  ev_pet: 'img/ev_stray.webp',
+  ev_food: 'img/ev_cooking.webp',
   // tenants
   ten_office: 'img/partner_f__japanese.webp',
   ten_student_m: 'img/partner_m__korean.webp',

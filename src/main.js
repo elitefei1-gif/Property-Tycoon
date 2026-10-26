@@ -10,6 +10,7 @@ import { rentFx, spendFx } from './render/fx.js';
 import { cityNews, toast } from './render/toast.js';
 import { upgrade, homeTier } from './home.js';
 import { investorVisit } from './investors.js';
+import { tenantEvent } from './events.js';
 import { drawEvent } from './render/event.js';
 import { drawSlotSheet } from './render/upgrade-sheet.js';
 
@@ -38,7 +39,8 @@ function nextMonth() {
   const before = s.money;
   const paid = collectRent(s);
   const news = cityMonth(s);
-  ui.event = investorVisit(s);
+  // At most one pop-up a month: an investor, otherwise maybe a tenant event.
+  ui.event = investorVisit(s) ?? tenantEvent(s);
   if (ui.event) ui.sheet = ui.slot = null;
   render();
   rentFx(paid, before, s.money);
