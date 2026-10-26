@@ -2,15 +2,13 @@
 
 One feature at a time. Each step must run, then gets committed.
 
-0. **Setup** – folders (`index.html`, `src/`, `src/render/`, `src/data/`), run with `python3 -m http.server`.
-1. **Canvas + game loop** (`main.js`) – crisp pixel canvas, `update(dt)` / `render()` loop, month timer.
-2. **Game state** (`state.js`) – money, month, buildings, home rooms; top bar showing money and month.
-3. **City map** (`render/map.js`, `data/buildings.js`) – tile grid with roads, grass and 6 building lots.
-4. **Buy / renovate / rent** (`city.js`) – click a building for a panel; run-down → owned → renovated → rented.
-5. **Monthly rent + pop-ups** – rent paid each month with floating "+¥" text.
-6. **Tenants** – random move-in/move-out; small big-headed sprites walk to buildings (`render/sprites.js`).
-7. **Home view** (`home.js`, `data/upgrades.js`) – City/Home toggle, 3 rooms with upgrade slots, your character walks around.
-8. **Home bonuses** – office = more property slots, bedroom = better deals, living room = investor offers.
-9. **Tenant events** (`data/events.js`) – leaking pipe, noisy tenant; pay to fix or risk the tenant leaving.
-10. **Save / load** – localStorage autosave each month, load on start.
-11. **Polish + balance** – tune numbers in `src/data/`, small animations and sounds.
+1. ~~**Shell + game loop**~~ – header card, City/Home tabs, real-time months with a pause button. ✅
+2. **City: buildings for sale** (`data/buildings.js`, `render/city.js`) – a list of ~6 run-down buildings as cards (price, area, rent).
+3. **Buy / renovate / rent** (`city.js`) – tap a card for a pop-up sheet; run-down → owned → renovated → rented.
+4. **Monthly rent** – rent paid each month, "+¥" pop-up on the cash pill, rent/month and property count in the header.
+5. **Tenants** – tenants move in and out on their own; each rented card shows its tenant.
+6. **Home view** (`home.js`, `data/upgrades.js`) – 3 rooms (bedroom, home office, living room) with upgrade slots and levels.
+7. **Home bonuses** – office = more property slots, bedroom = better deals, living room = investor offers.
+8. **Events** (`data/events.js`) – pop-up sheets with choices: leaking pipe, noisy tenant, etc.
+9. **Save / load** – localStorage autosave each month, load on start.
+10. **Polish + balance** – tune numbers in `src/data/`, small animations, sounds, illustrations.

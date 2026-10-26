@@ -4,6 +4,7 @@ A casual browser tycoon game: build a property empire in a city while upgrading 
 Light, cute and relaxing. Nothing too serious or punishing.
 
 ## Core idea
+- **Setting:** a Japanese city (Tokyo), money in yen (¥).
 - **City view:** buy run-down buildings, renovate them, rent them out. Tenants move in and out on their own. Rent arrives monthly with "+¥" pop-ups.
 - **Home view:** your own home, starting as a tiny rented room and growing to a mansion. Rooms have upgrade slots (bed, desk, sofa, decoration), not free placement.
 - **The link:** rent pays for home upgrades; home upgrades give business bonuses
@@ -17,19 +18,22 @@ Light, cute and relaxing. Nothing too serious or punishing.
 - No free furniture placement, no rival landlords, no market crashes yet.
 
 ## Look and feel
-- Cute top-down pixel style with small big-headed characters (similar spirit to Kairosoft games, all original art drawn in code).
-- Little characters walk around: tenants entering buildings, you moving around your home.
-- Pixel pop-ups for money and events.
+- Card-style mobile-first interface like Malaysian Life Simulator (github.com/elitefei1-gif/Malaysia-Life-Simulation): a header card with cash, date and stats; big picture tabs (City / Home) to switch modes; rounded cream panels with gold borders; pop-up sheets with choice cards for events.
+- Japanese palette: indigo, vermilion red and gold on cream, with a seigaiha wave band behind the header.
+- Emoji stand in for pictures for now; illustrations can replace them later.
+- Real-time months: time passes on its own (bottom bar shows progress through the month, with a pause button).
 
 ## Tech rules
 - Plain HTML, CSS and JavaScript. No frameworks, no build step.
 - Split code into ES modules from the start, e.g.:
   - `index.html` – page shell
-  - `src/main.js` – game loop
+  - `css/style.css` – all styling
+  - `src/main.js` – start-up, game loop, button clicks
+  - `src/format.js` – money and date helpers
   - `src/state.js` – game state, save/load
   - `src/city.js` – buildings, tenants, rent
   - `src/home.js` – home rooms and upgrades
-  - `src/render/` – drawing code (pixel sprites, map, UI)
+  - `src/render/` – HTML for each part of the screen (header card, tabs, panels, bottom bar)
   - `src/data/` – building, upgrade and event data as plain objects (easy to tweak balance)
 - Keep each file focused and reasonably small. Add new features in new files rather than growing one big file.
 - Run locally with `python3 -m http.server` and open http://localhost:8000.

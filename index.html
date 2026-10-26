@@ -2,12 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Property Tycoon</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <canvas id="game"></canvas>
+  <div id="app">
+    <header id="hud"></header>
+    <nav id="tabs" class="tabs" role="tablist" aria-label="Views"></nav>
+    <main id="panel" class="stack"></main>
+    <div class="timebar"><div class="inner" id="timebar"></div></div>
+  </div>
   <script type="module" src="src/main.js"></script>
 </body>
 </html>
