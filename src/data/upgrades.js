@@ -6,6 +6,7 @@
 // img = the furniture picture for that level (null = nothing there). Missing files show a placeholder.
 // size = how wide the picture is, as a share of the box width (default 1 = full width), so bigger
 // furniture looks bigger. Pictures stand on the bottom of the box and may poke out of its top.
+// skew = extra slant in degrees for a slot's pictures, to line them up with a wall (+ = right side goes down).
 // See ART.md for the list of pictures and how to make them.
 const room = name => `img/room/${name}.webp`;
 
@@ -16,7 +17,7 @@ export const ROOMS = [
       { name: 'Thick futon', cost: 120_000, img: room('bed_1'), size: 0.8 },
       { name: 'Wooden bed', cost: 450_000, img: room('bed_2'), size: 0.78 },
       { name: 'King-size bed', cost: 1_500_000, img: room('bed_3'), size: 1 } ] },
-    { id: 'bdeco', name: 'Wall art', icon: '🖼️', box: { x: 62, y: 16, w: 17, h: 26 }, levels: [
+    { id: 'bdeco', name: 'Wall art', icon: '🖼️', skew: 13, box: { x: 62, y: 16, w: 17, h: 26 }, levels: [
       { name: 'Bare wall', cost: 0, img: null },
       { name: 'Cute poster', cost: 60_000, img: room('bdeco_1'), size: 0.8 },
       { name: 'Framed photo', cost: 250_000, img: room('bdeco_2') },

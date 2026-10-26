@@ -62,4 +62,5 @@ One picture per item still works too: `python3 tools/prepare_art.py picture.png 
 - If Gemini adds a floor or shadow under furniture, ask it to "remove the floor and shadow, plain white background only".
 - If items in a sheet touch each other or cross the middle lines, ask Gemini to "make the items smaller with more white space between them".
 - If an item looks too big or small in the room, the spot can be changed in `src/data/upgrades.js`.
+- If an item's angle doesn't quite match a wall, `skew` on its slot in `src/data/upgrades.js` slants it (the bedroom wall art uses 13°).
 - Level 0 of the wall art and corner slots is "nothing", so they need no picture.
