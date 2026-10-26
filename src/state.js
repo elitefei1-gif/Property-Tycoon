@@ -6,5 +6,6 @@ export function createState() {
     monthTimer: 0,    // seconds into the current month
     view: 'city',     // which tab is open: 'city' or 'home'
     paused: false,
+    owned: {},        // building id -> { stage, renoLeft }
   };
 }

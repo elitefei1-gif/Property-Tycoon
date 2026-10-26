@@ -33,7 +33,7 @@ Light, cute and relaxing. Nothing too serious or punishing.
   - `src/state.js` – game state, save/load
   - `src/city.js` – buildings, tenants, rent
   - `src/home.js` – home rooms and upgrades
-  - `src/render/` – HTML for each part of the screen (header card, tabs, panels, bottom bar)
+  - `src/render/` – HTML for each part of the screen (header card, tabs, panels, pop-up sheet, bottom bar)
   - `src/data/` – building, upgrade and event data as plain objects (easy to tweak balance)
 - Keep each file focused and reasonably small. Add new features in new files rather than growing one big file.
 - Run locally with `python3 -m http.server` and open http://localhost:8000.

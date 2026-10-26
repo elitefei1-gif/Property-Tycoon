@@ -1,6 +1,7 @@
 // Header card: who you are, the date, and your money.
 import { yen, monthName, yearOf } from '../format.js';
 import { pic } from './pics.js';
+import { monthlyRent, ownedCount } from '../city.js';
 
 export function drawHud(el, s) {
   el.innerHTML = `
@@ -13,8 +14,8 @@ export function drawHud(el, s) {
       </div>
       <div class="figures">
         <span>Cash<b>${yen(s.money)}</b></span>
-        <span>Rent / month<b>${yen(0)}</b></span>
-        <span>Properties<b>0</b></span>
+        <span>Rent / month<b>${yen(monthlyRent(s))}</b></span>
+        <span>Properties<b>${ownedCount(s)}</b></span>
       </div>
     </div>`;
 }

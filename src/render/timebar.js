@@ -13,9 +13,9 @@ export function createTimebar(el) {
   const fill = el.querySelector('#tb-fill');
   const pause = el.querySelector('#tb-pause');
 
-  return function update(s, progress) {
+  return function update(s, progress, sheetOpen) {
     fill.style.width = `${(progress * 100).toFixed(1)}%`;
-    label.textContent = s.paused ? 'Paused' : `${monthName(s.month + 1)} starts soon…`;
+    label.textContent = s.paused ? 'Paused' : sheetOpen ? 'Time stops while you look' : `${monthName(s.month + 1)} starts soon…`;
     pause.textContent = s.paused ? '▶ Play' : '⏸ Pause';
   };
 }
