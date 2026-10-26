@@ -1,6 +1,7 @@
 // City tab: your properties, then buildings for sale, as cards. Tapping a card opens its sheet.
 import { BUILDINGS } from '../data/buildings.js';
-import { stageOf } from '../city.js';
+import { stageOf, ownedCount } from '../city.js';
+import { buyPrice, maxProperties } from '../bonus.js';
 import { yen } from '../format.js';
 import { pic } from './pics.js';
 
@@ -18,7 +19,7 @@ export const isFixed = stage => ['ready', 'listed', 'rented'].includes(stage);
 
 function bottomLine(b, s, stage) {
   if (stage === 'forsale') return `
-    <div class="bprice mono ${s.money < b.price ? 'short' : ''}">${yen(b.price)}</div>
+    <div class="bprice mono ${s.money < buyPrice(s, b) ? 'short' : ''}">${yen(buyPrice(s, b))}</div>
     <div class="sub">Rent after renovation <b class="mono">${yen(b.rent)}</b>/mo</div>`;
   const t = s.owned[b.id].tenant;
   if (t) return `<div class="tenant">${pic(t.pic)}<span><b>${t.name}-san</b><br>${t.kind}</span></div>`;
@@ -40,10 +41,10 @@ function buildingCard(b, s) {
     </button>`;
 }
 
-function section(title, list, s, empty) {
+function section(title, list, s, empty, count = list.length) {
   return `
     <section class="panel">
-      <div class="phead"><h3>${title}</h3><span class="pill">${list.length}</span></div>
+      <div class="phead"><h3>${title}</h3><span class="pill">${count}</span></div>
       ${list.length ? `<div class="bgrid">${list.map(b => buildingCard(b, s)).join('')}</div>`
                     : `<div class="empty small">${empty}</div>`}
     </section>`;
@@ -52,6 +53,7 @@ function section(title, list, s, empty) {
 export function drawCity(s) {
   const mine = BUILDINGS.filter(b => stageOf(s, b.id) !== 'forsale');
   const forSale = BUILDINGS.filter(b => stageOf(s, b.id) === 'forsale');
-  return section('Your properties', mine, s, 'You don\'t own anything yet. Tap a building below to buy it.')
+  return section('Your properties', mine, s, 'You don\'t own anything yet. Tap a building below to buy it.',
+                 `${ownedCount(s)} / ${maxProperties(s)}`)
        + section('For sale', forSale, s, 'You\'ve bought every building in town!');
 }

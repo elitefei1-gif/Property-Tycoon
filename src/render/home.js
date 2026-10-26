@@ -2,6 +2,8 @@
 import { ROOMS } from '../data/upgrades.js';
 import { levelOf, nextLevel, homeTier, nextTier, totalLevels } from '../home.js';
 import { yen } from '../format.js';
+import { roomLevel, maxProperties, dealDiscount, investorChance } from '../bonus.js';
+import { PROPERTIES_PER_LEVEL, DISCOUNT_PER_LEVEL, INVESTOR_PER_LEVEL } from '../data/bonuses.js';
 import { pic } from './pics.js';
 
 const pips = (lv, max) => `<span class="pips">${Array.from({ length: max }, (_, i) => `<i class="${i < lv ? 'on' : ''}"></i>`).join('')}</span>`;
@@ -21,10 +23,24 @@ function slotRow(sl, s) {
     </div>`;
 }
 
+const pct = n => `${Math.round(n * 100)}%`;
+
+// What this room does for your business, and what the next upgrade adds.
+function bonusLine(r, s) {
+  const maxed = roomLevel(s, r.id) >= r.slots.reduce((n, sl) => n + sl.levels.length - 1, 0);
+  const more = text => maxed ? '' : `<span class="next">Each upgrade: ${text}</span>`;
+  if (r.id === 'bedroom') return `😴 <b>Well rested:</b> ${pct(dealDiscount(s))} off buying and renovating${more(`+${pct(DISCOUNT_PER_LEVEL)}`)}`;
+  if (r.id === 'office') return `💼 <b>Business:</b> you can manage ${maxProperties(s)} properties${more(`+${PROPERTIES_PER_LEVEL}`)}`;
+  if (r.id === 'living') return investorChance(s) > 0
+    ? `🤝 <b>Hosting:</b> ${pct(investorChance(s))} chance an investor visits each month${more(`+${pct(INVESTOR_PER_LEVEL)}`)}`
+    : `🤝 <b>Hosting:</b> upgrade to invite investors with special offers`;
+}
+
 function roomPanel(r, s) {
   return `
     <section class="panel room">
       <div class="rhead">${pic(r.pic, 'ricon')}<h3>${r.name}</h3></div>
+      <p class="perk">${bonusLine(r, s)}</p>
       ${r.slots.map(sl => slotRow(sl, s)).join('')}
     </section>`;
 }

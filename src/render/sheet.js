@@ -1,5 +1,6 @@
 // Pop-up sheet for one building: picture, details and the next action.
-import { building, stageOf, RENO_MONTHS } from '../city.js';
+import { building, stageOf, RENO_MONTHS, isFull } from '../city.js';
+import { buyPrice, renoCost, dealDiscount, maxProperties } from '../bonus.js';
 import { yen, monthName, yearOf } from '../format.js';
 import { pic } from './pics.js';
 import { STAGES, isFixed } from './city.js';
@@ -12,14 +13,19 @@ const choice = (act, id, label, hint, enabled = true) => `
 
 function actions(b, stage, s) {
   switch (stage) {
-    case 'forsale':
-      return choice('buy', b.id, `Buy for ${yen(b.price)}`,
-        s.money >= b.price ? 'It\'s run-down. You\'ll need to renovate before renting it out.'
-                           : `You need ${yen(b.price - s.money)} more.`, s.money >= b.price);
-    case 'rundown':
-      return choice('renovate', b.id, `Renovate for ${yen(b.reno)}`,
-        s.money >= b.reno ? `Takes ${RENO_MONTHS} month. Then it's ready for tenants.`
-                          : `You need ${yen(b.reno - s.money)} more.`, s.money >= b.reno);
+    case 'forsale': {
+      const price = buyPrice(s, b);
+      const hint = isFull(s) ? `Your home office can only manage ${maxProperties(s)} properties. Upgrade it in the Home tab.`
+        : s.money < price ? `You need ${yen(price - s.money)} more.`
+        : 'It\'s run-down. You\'ll need to renovate before renting it out.';
+      return choice('buy', b.id, `Buy for ${yen(price)}`, hint, s.money >= price && !isFull(s));
+    }
+    case 'rundown': {
+      const cost = renoCost(s, b);
+      return choice('renovate', b.id, `Renovate for ${yen(cost)}`,
+        s.money >= cost ? `Takes ${RENO_MONTHS} month. Then it's ready for tenants.`
+                        : `You need ${yen(cost - s.money)} more.`, s.money >= cost);
+    }
     case 'renovating':
       return `<p class="note">🔨 The builders are working. Ready next month.</p>`;
     case 'ready':
@@ -48,10 +54,11 @@ export function drawSheet(el, s, id) {
       <h2 id="sh-title">${b.name}</h2>
       <p class="sub">${b.area} · ${b.type}</p>
       <div class="figures">
-        <span>Price<b>${yen(b.price)}</b></span>
-        <span>Renovation<b>${yen(b.reno)}</b></span>
+        <span>Price<b>${yen(buyPrice(s, b))}</b></span>
+        <span>Renovation<b>${yen(renoCost(s, b))}</b></span>
         <span>Rent / month<b>${yen(b.rent)}</b></span>
       </div>
+      ${dealDiscount(s) > 0 && stage !== 'renovating' && !isFixed(stage) ? `<p class="perk">😴 Well rested: ${Math.round(dealDiscount(s) * 100)}% off thanks to your bedroom</p>` : ''}
       <div class="choices">${actions(b, stage, s)}</div>
     </div>`;
 }

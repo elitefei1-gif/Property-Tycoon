@@ -3,6 +3,7 @@
 //         <-> 'rented' (a tenant lives there and pays rent; when they leave it goes back to 'listed').
 import { BUILDINGS } from './data/buildings.js';
 import { TENANT_KINDS, SURNAMES, FIND_CHANCE, STAY_MIN, STAY_MAX } from './data/tenants.js';
+import { buyPrice, renoCost, maxProperties } from './bonus.js';
 
 // Months a renovation takes.
 export const RENO_MONTHS = 1;
@@ -20,20 +21,24 @@ export function monthlyRent(s) {
     .reduce((sum, [id]) => sum + building(id).rent, 0);
 }
 
+export const isFull = s => ownedCount(s) >= maxProperties(s);
+
+// Returns what you paid, or false.
 export function buy(s, id) {
-  const b = building(id);
-  if (stageOf(s, id) !== 'forsale' || s.money < b.price) return false;
-  s.money -= b.price;
+  const price = buyPrice(s, building(id));
+  if (stageOf(s, id) !== 'forsale' || s.money < price || isFull(s)) return false;
+  s.money -= price;
   s.owned[id] = { stage: 'rundown' };
-  return true;
+  return price;
 }
 
+// Returns what you paid, or false.
 export function renovate(s, id) {
-  const b = building(id);
-  if (stageOf(s, id) !== 'rundown' || s.money < b.reno) return false;
-  s.money -= b.reno;
+  const cost = renoCost(s, building(id));
+  if (stageOf(s, id) !== 'rundown' || s.money < cost) return false;
+  s.money -= cost;
   s.owned[id] = { stage: 'renovating', renoLeft: RENO_MONTHS };
-  return true;
+  return cost;
 }
 
 // Put a renovated building on the rental market. Tenants find it on their own.

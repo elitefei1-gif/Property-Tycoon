@@ -18,6 +18,10 @@ export const PICS = {
   home_apt: 'img/h_apt.webp',
   home_house: 'img/h_jb.webp',
   home_mansion: 'img/h_bungalow.webp',
+  // investor offers
+  inv_buyer: 'img/ev_biz_buyer.webp',
+  inv_tip: 'img/a_invest.webp',
+  inv_gift: 'img/m_money.webp',
   // tenants
   ten_office: 'img/partner_f__japanese.webp',
   ten_student_m: 'img/partner_m__korean.webp',
