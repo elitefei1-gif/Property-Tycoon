@@ -1,5 +1,5 @@
 // Start-up, the game loop, and button clicks.
-import { createState } from './state.js';
+import { loadState, save, clearSave } from './state.js';
 import { buy, renovate, rentOut, cityMonth, collectRent } from './city.js';
 import { drawHud } from './render/hud.js';
 import { drawTabs } from './render/tabs.js';
@@ -17,7 +17,7 @@ import { drawSlotSheet } from './render/upgrade-sheet.js';
 // Real seconds per in-game month.
 const SECONDS_PER_MONTH = 10;
 
-const s = createState();
+const s = loadState();
 // Screen-only state that isn't part of the game (not saved).
 // sheet = building id, slot = furniture slot id, room = which room the Home tab shows.
 const ui = { sheet: null, slot: null, event: null, room: 'bedroom' };
@@ -43,6 +43,7 @@ function nextMonth() {
   ui.event = investorVisit(s) ?? tenantEvent(s);
   if (ui.event) ui.sheet = ui.slot = null;
   render();
+  if (!resetting) save(s);
   rentFx(paid, before, s.money);
   cityNews(news);
 }
@@ -64,6 +65,12 @@ const ACT = {
   pause: () => { s.paused = !s.paused; },
   open: id => { ui.sheet = id; },
   close: () => { ui.sheet = ui.slot = ui.event = null; },
+  newgame: () => {
+    if (!confirm('Start a new game? Your current landlord career will be lost.')) return;
+    clearSave();
+    resetting = true; // don't save the old game again while the page reloads
+    location.reload();
+  },
   room: id => { ui.room = id; },
   slot: id => { ui.slot = id; },
   choose: i => {
@@ -93,6 +100,7 @@ document.addEventListener('click', e => {
   if (!btn || btn.disabled) return;
   ACT[btn.dataset.act]?.(btn.dataset.id, btn);
   render();
+  if (!resetting) save(s);
 });
 
 document.addEventListener('keydown', e => {
@@ -108,6 +116,11 @@ function loop(now) {
   updateTimebar(s, s.monthTimer / SECONDS_PER_MONTH, modalOpen());
   requestAnimationFrame(loop);
 }
+
+// Save the time into the month too when the page is closed or hidden.
+let resetting = false;
+addEventListener('pagehide', () => { if (!resetting) save(s); });
+document.addEventListener('visibilitychange', () => { if (document.hidden && !resetting) save(s); });
 
 render();
 requestAnimationFrame(loop);

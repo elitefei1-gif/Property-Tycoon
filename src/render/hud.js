@@ -7,7 +7,7 @@ import { homeTier } from '../home.js';
 export function drawHud(el, s) {
   el.innerHTML = `
     <div class="card">
-      <div class="card-top"><span>Landlord card</span><span>Tokyo</span></div>
+      <div class="card-top"><span>Landlord card</span><button class="newgame" data-act="newgame">↺ New game</button></div>
       <div class="card-body">
         <div class="avatar">${pic('player')}</div>
         <div><div class="name">You</div><div class="sub">Rookie landlord · ${homeTier(s).name.toLowerCase()}</div></div>

@@ -231,3 +231,5 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 #ev-title { display: flex; align-items: center; gap: 10px; }
 #ev-title .face { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid var(--gold); background: var(--surface2); flex: none; }
 .tag.event { justify-self: start; }
+.newgame { border: 0; background: none; padding: 0; font: inherit; color: var(--muted); letter-spacing: inherit; text-transform: inherit; }
+.newgame:hover { color: var(--red); }
