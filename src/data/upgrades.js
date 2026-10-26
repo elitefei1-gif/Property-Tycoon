@@ -9,12 +9,12 @@ const room = name => `img/room/${name}.webp`;
 
 export const ROOMS = [
   { id: 'bedroom', name: 'Bedroom', pic: 'room_bed', bg: room('bedroom_bg'), slots: [
-    { id: 'bed', name: 'Bed', icon: '🛏️', box: { x: 6, y: 44, w: 58, h: 46 }, levels: [
+    { id: 'bed', name: 'Bed', icon: '🛏️', box: { x: 22, y: 42, w: 56, h: 50 }, levels: [
       { name: 'Thin futon', cost: 0, img: room('bed_0') },
       { name: 'Thick futon', cost: 120_000, img: room('bed_1') },
       { name: 'Wooden bed', cost: 450_000, img: room('bed_2') },
       { name: 'King-size bed', cost: 1_500_000, img: room('bed_3') } ] },
-    { id: 'bdeco', name: 'Wall art', icon: '🖼️', box: { x: 66, y: 10, w: 26, h: 30 }, levels: [
+    { id: 'bdeco', name: 'Wall art', icon: '🖼️', box: { x: 66, y: 12, w: 24, h: 30 }, levels: [
       { name: 'Bare wall', cost: 0, img: null },
       { name: 'Cute poster', cost: 60_000, img: room('bdeco_1') },
       { name: 'Framed photo', cost: 250_000, img: room('bdeco_2') },
@@ -26,19 +26,19 @@ export const ROOMS = [
       { name: 'Study desk', cost: 150_000, img: room('desk_1') },
       { name: 'Desk with PC', cost: 600_000, img: room('desk_2') },
       { name: 'Executive desk', cost: 2_000_000, img: room('desk_3') } ] },
-    { id: 'odeco', name: 'Corner', icon: '📚', box: { x: 76, y: 20, w: 21, h: 64 }, levels: [
+    { id: 'odeco', name: 'Corner', icon: '📚', box: { x: 72, y: 24, w: 20, h: 64 }, levels: [
       { name: 'Empty corner', cost: 0, img: null },
       { name: 'Potted plant', cost: 40_000, img: room('odeco_1') },
       { name: 'Bookshelf', cost: 300_000, img: room('odeco_2') },
       { name: 'Bonsai display', cost: 1_200_000, img: room('odeco_3') } ] },
   ] },
   { id: 'living', name: 'Living room', pic: 'room_living', bg: room('living_bg'), slots: [
-    { id: 'sofa', name: 'Seating', icon: '🛋️', box: { x: 30, y: 42, w: 60, h: 44 }, levels: [
+    { id: 'sofa', name: 'Seating', icon: '🛋️', box: { x: 38, y: 44, w: 50, h: 46 }, levels: [
       { name: 'Floor cushion', cost: 0, img: room('sofa_0') },
       { name: 'Kotatsu table', cost: 200_000, img: room('sofa_1') },
       { name: 'Comfy sofa', cost: 700_000, img: room('sofa_2') },
       { name: 'Leather sofa set', cost: 2_500_000, img: room('sofa_3') } ] },
-    { id: 'ldeco', name: 'Feature', icon: '🐟', box: { x: 3, y: 26, w: 25, h: 58 }, levels: [
+    { id: 'ldeco', name: 'Feature', icon: '🐟', box: { x: 15, y: 30, w: 21, h: 58 }, levels: [
       { name: 'Empty corner', cost: 0, img: null },
       { name: 'Floor lamp', cost: 80_000, img: room('ldeco_1') },
       { name: 'Big TV', cost: 400_000, img: room('ldeco_2') },

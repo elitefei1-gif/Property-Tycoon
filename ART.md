@@ -23,7 +23,7 @@ Generate all pictures for one room in the same Gemini chat so they match.
 **Camera angle matters most.** Everything is seen **from the front, slightly from above** (about 15°),
 looking straight at the back wall. No side walls, no dramatic perspective. Furniture must use the same angle.
 
-## Room backgrounds (3 pictures)
+## Room backgrounds (3 pictures) ✅ done
 
 Landscape, 4:3 (e.g. 1200×900). An **empty** room: back wall on the top ~55%, floor on the bottom ~45%.
 No furniture, no people, no text.
