@@ -11,13 +11,15 @@ import { cityNews, toast } from './render/toast.js';
 import { upgrade, homeTier } from './home.js';
 import { investorVisit } from './investors.js';
 import { drawEvent } from './render/event.js';
+import { drawSlotSheet } from './render/upgrade-sheet.js';
 
 // Real seconds per in-game month.
 const SECONDS_PER_MONTH = 10;
 
 const s = createState();
 // Screen-only state that isn't part of the game (not saved).
-const ui = { sheet: null, event: null };
+// sheet = building id, slot = furniture slot id, room = which room the Home tab shows.
+const ui = { sheet: null, slot: null, event: null, room: 'bedroom' };
 const $ = id => document.getElementById(id);
 const updateTimebar = createTimebar($('timebar'));
 
@@ -25,8 +27,9 @@ const updateTimebar = createTimebar($('timebar'));
 function render() {
   drawHud($('hud'), s);
   drawTabs($('tabs'), s);
-  drawPanel($('panel'), s);
+  drawPanel($('panel'), s, ui);
   if (ui.event) drawEvent($('modal'), ui.event);
+  else if (ui.slot) drawSlotSheet($('modal'), s, ui.slot);
   else drawSheet($('modal'), s, ui.sheet);
 }
 
@@ -36,15 +39,17 @@ function nextMonth() {
   const paid = collectRent(s);
   const news = cityMonth(s);
   ui.event = investorVisit(s);
-  if (ui.event) ui.sheet = null;
+  if (ui.event) ui.sheet = ui.slot = null;
   render();
   rentFx(paid, before, s.money);
   cityNews(news);
 }
 
+const modalOpen = () => !!(ui.sheet || ui.slot || ui.event);
+
 function update(dt) {
   // Time stops while you're paused or looking at a pop-up.
-  if (s.paused || ui.sheet || ui.event) return;
+  if (s.paused || modalOpen()) return;
   s.monthTimer += dt;
   if (s.monthTimer >= SECONDS_PER_MONTH) {
     s.monthTimer -= SECONDS_PER_MONTH;
@@ -56,7 +61,9 @@ function update(dt) {
 const ACT = {
   pause: () => { s.paused = !s.paused; },
   open: id => { ui.sheet = id; },
-  close: () => { ui.sheet = null; ui.event = null; },
+  close: () => { ui.sheet = ui.slot = ui.event = null; },
+  room: id => { ui.room = id; },
+  slot: id => { ui.slot = id; },
   choose: i => {
     const result = ui.event.choices[i].run(s);
     ui.event = null;
@@ -87,7 +94,7 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && (ui.sheet || ui.event)) { ACT.close(); render(); }
+  if (e.key === 'Escape' && modalOpen()) { ACT.close(); render(); }
 });
 
 let last = performance.now();
@@ -96,7 +103,7 @@ function loop(now) {
   const dt = Math.min((now - last) / 1000, 0.25);
   last = now;
   update(dt);
-  updateTimebar(s, s.monthTimer / SECONDS_PER_MONTH, !!(ui.sheet || ui.event));
+  updateTimebar(s, s.monthTimer / SECONDS_PER_MONTH, modalOpen());
   requestAnimationFrame(loop);
 }
 

@@ -1,32 +1,15 @@
-// Home tab: what kind of home you live in, then each room with its upgrade slots.
+// Home tab: what kind of home you live in, then one room at a time drawn as a picture
+// with its furniture in place. Tap a piece of furniture to upgrade it.
 import { ROOMS } from '../data/upgrades.js';
 import { levelOf, nextLevel, homeTier, nextTier, totalLevels } from '../home.js';
-import { yen } from '../format.js';
 import { roomLevel, maxProperties, dealDiscount, investorChance } from '../bonus.js';
 import { PROPERTIES_PER_LEVEL, DISCOUNT_PER_LEVEL, INVESTOR_PER_LEVEL } from '../data/bonuses.js';
 import { pic } from './pics.js';
 
-const pips = (lv, max) => `<span class="pips">${Array.from({ length: max }, (_, i) => `<i class="${i < lv ? 'on' : ''}"></i>`).join('')}</span>`;
-
-function slotRow(sl, s) {
-  const lv = levelOf(s, sl.id);
-  const next = nextLevel(s, sl.id);
-  const btn = next
-    ? `<button class="up" data-act="upgrade" data-id="${sl.id}" ${s.money < next.cost ? 'disabled' : ''}>
-         <b>${next.name}</b><span class="mono">${yen(next.cost)}</span></button>`
-    : `<span class="maxed">★ Best</span>`;
-  return `
-    <div class="slot">
-      <span class="sicon">${sl.icon}</span>
-      <div class="sname"><b>${sl.levels[lv].name}</b><span>${sl.name} ${pips(lv, sl.levels.length - 1)}</span></div>
-      ${btn}
-    </div>`;
-}
-
 const pct = n => `${Math.round(n * 100)}%`;
 
 // What this room does for your business, and what the next upgrade adds.
-function bonusLine(r, s) {
+export function bonusLine(r, s) {
   const maxed = roomLevel(s, r.id) >= r.slots.reduce((n, sl) => n + sl.levels.length - 1, 0);
   const more = text => maxed ? '' : `<span class="next">Each upgrade: ${text}</span>`;
   if (r.id === 'bedroom') return `😴 <b>Well rested:</b> ${pct(dealDiscount(s))} off buying and renovating${more(`+${pct(DISCOUNT_PER_LEVEL)}`)}`;
@@ -36,13 +19,32 @@ function bonusLine(r, s) {
     : `🤝 <b>Hosting:</b> upgrade to invite investors with special offers`;
 }
 
-function roomPanel(r, s) {
+// A picture that falls back to a placeholder (the next element) if its file doesn't exist yet.
+export const artImg = (src, cls = '') =>
+  `<img class="${cls}" src="${src}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false">`;
+
+// A level's furniture picture, or a dashed placeholder box with its emoji and name.
+export const furniture = (sl, lv) => `
+  ${artImg(lv.img)}<span class="ph" hidden><span>${sl.icon}</span>${lv.name}</span>`;
+
+function furniturePiece(sl, s) {
+  const lv = sl.levels[levelOf(s, sl.id)];
+  const { x, y, w, h } = sl.box;
+  const canUp = !!nextLevel(s, sl.id);
+  const inner = lv.img ? furniture(sl, lv) : `<span class="spot">＋<small>${sl.name}</small></span>`;
   return `
-    <section class="panel room">
-      <div class="rhead">${pic(r.pic, 'ricon')}<h3>${r.name}</h3></div>
-      <p class="perk">${bonusLine(r, s)}</p>
-      ${r.slots.map(sl => slotRow(sl, s)).join('')}
-    </section>`;
+    <button class="piece ${canUp ? 'can-up' : ''}" data-act="slot" data-id="${sl.id}"
+      style="left:${x}%;top:${y}%;width:${w}%;height:${h}%" aria-label="${sl.name}: ${lv.name}">
+      ${inner}
+    </button>`;
+}
+
+function roomStage(r, s) {
+  return `
+    <div class="stage">
+      ${artImg(r.bg, 'bg')}<div class="bg-ph" hidden></div>
+      ${r.slots.map(sl => furniturePiece(sl, s)).join('')}
+    </div>`;
 }
 
 function homeCard(s) {
@@ -58,6 +60,15 @@ function homeCard(s) {
     </section>`;
 }
 
-export function drawHome(s) {
-  return homeCard(s) + ROOMS.map(r => roomPanel(r, s)).join('');
+export function drawHome(s, roomId) {
+  const r = ROOMS.find(x => x.id === roomId) ?? ROOMS[0];
+  return homeCard(s) + `
+    <section class="panel">
+      <div class="seg" role="tablist">${ROOMS.map(x => `
+        <button role="tab" data-act="room" data-id="${x.id}" aria-selected="${x.id === r.id}">${pic(x.pic)}${x.name}</button>`).join('')}
+      </div>
+      ${roomStage(r, s)}
+      <p class="hint">Tap furniture to upgrade it. ✨ means an upgrade is available.</p>
+      <p class="perk">${bonusLine(r, s)}</p>
+    </section>`;
 }
