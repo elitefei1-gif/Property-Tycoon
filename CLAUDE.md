@@ -20,7 +20,7 @@ Light, cute and relaxing. Nothing too serious or punishing.
 ## Look and feel
 - Card-style mobile-first interface like Malaysian Life Simulator (github.com/elitefei1-gif/Malaysia-Life-Simulation): a header card with cash, date and stats; big picture tabs (City / Home) to switch modes; rounded cream panels with gold borders; pop-up sheets with choice cards for events.
 - Japanese palette: indigo, vermilion red and gold on cream, with a seigaiha wave band behind the header.
-- Emoji stand in for pictures for now; illustrations can replace them later.
+- Pictures are `.webp` illustrations in `img/`, borrowed from Malaysian Life Simulator (its `img/` folder has ~450: houses `h_`, events `ev_`, Japanese portraits `*__japanese`, etc.). Copy only the ones used, and register them in `PICS` in `src/render/pics.js`. Emoji fill gaps.
 - Real-time months: time passes on its own (bottom bar shows progress through the month, with a pause button).
 
 ## Tech rules

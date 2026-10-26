@@ -40,7 +40,8 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 }
 .card-top { display: flex; justify-content: space-between; font: 800 10px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--indigo); }
 .card-body { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
-.avatar { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; font-size: 32px; background: linear-gradient(#fdebc4, #f7d58b); border: 2px solid var(--gold); }
+.avatar { width: 56px; height: 56px; border-radius: 14px; overflow: hidden; background: linear-gradient(#fdebc4, #f7d58b); border: 2px solid var(--gold); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .name { font: 900 21px/1.1 var(--f-body); color: var(--indigo); }
 .sub { font-size: 13px; color: var(--muted); }
 .date { background: var(--red); color: #fff; border-radius: 16px; padding: 7px 12px; text-align: center; min-width: 70px; }
@@ -57,7 +58,7 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
   border: 2px solid var(--line); background: var(--surface); color: var(--muted); font-weight: 800;
   transition: transform .15s, border-color .15s;
 }
-.tabs button .pic { font-size: 28px; line-height: 1.2; }
+.tabs button .pic { width: 40px; height: 40px; object-fit: contain; }
 .tabs button:hover { transform: translateY(-1px); border-color: var(--gold); }
 .tabs button[aria-selected="true"] { background: var(--indigo); color: #fff; border-color: var(--gold); box-shadow: 0 3px 0 var(--indigo-d); }
 
@@ -65,7 +66,7 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .panel { background: var(--surface); border: 2px solid var(--line); border-radius: 20px; padding: 16px; display: grid; gap: 12px; }
 .panel h3 { color: var(--indigo); font-size: 18px; }
 .empty { text-align: center; padding: 28px 12px; color: var(--muted); }
-.empty .pic { font-size: 56px; }
+.empty .pic { display: block; width: 140px; height: 120px; margin: 0 auto 8px; object-fit: contain; }
 
 /* Bottom time bar: months pass on their own; the bar shows how far into the month we are */
 .timebar {
