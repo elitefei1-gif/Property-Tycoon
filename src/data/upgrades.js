@@ -25,9 +25,9 @@ export const ROOMS = [
   ] },
   { id: 'office', name: 'Home office', pic: 'room_office', bg: room('office_bg'), slots: [
     { id: 'desk', name: 'Desk', icon: '🖥️', box: { x: 20, y: 38, w: 42, h: 48 }, levels: [
-      { name: 'Low table', cost: 0, img: room('desk_0'), size: 0.8 },
-      { name: 'Study desk', cost: 150_000, img: room('desk_1'), size: 0.78 },
-      { name: 'Desk with PC', cost: 600_000, img: room('desk_2'), size: 0.88 },
+      { name: 'Low table', cost: 0, img: room('desk_0'), size: 0.86 },
+      { name: 'Study desk', cost: 150_000, img: room('desk_1'), size: 0.86 },
+      { name: 'Desk with PC', cost: 600_000, img: room('desk_2'), size: 0.95 },
       { name: 'Executive desk', cost: 2_000_000, img: room('desk_3') } ] },
     { id: 'odeco', name: 'Corner', icon: '📚', box: { x: 60, y: 22, w: 18, h: 48 }, levels: [
       { name: 'Empty corner', cost: 0, img: null },
