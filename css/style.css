@@ -82,3 +82,17 @@ button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .btn:hover { border-color: var(--gold); }
 .btn.go { background: linear-gradient(90deg, var(--red), #e2604f); color: #fff; border-color: var(--gold); min-width: 108px; box-shadow: 0 6px 16px rgba(210,72,60,.28); }
 @media (prefers-reduced-motion: reduce) { .tabs button { transition: none; } }
+
+/* Building cards */
+.phead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.pill { font: 800 12px var(--f-body); color: var(--red); background: #fde7e4; border-radius: 99px; padding: 3px 10px; }
+.bgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.bcard { background: var(--bg); border: 1.5px solid var(--line-strong); border-radius: 14px; overflow: hidden; display: grid; }
+.bpic { position: relative; background: var(--surface2); aspect-ratio: 4 / 3; display: grid; place-items: center; }
+.bpic img { width: 82%; height: 92%; object-fit: contain; filter: saturate(.55) sepia(.25); }
+.bpic .tag { position: absolute; left: 8px; top: 8px; font: 900 9px/1.6 var(--f-body); letter-spacing: .06em; text-transform: uppercase; border-radius: 99px; padding: 0 7px; background: #f6e3c8; color: #9a5a11; }
+.binfo { padding: 8px 10px 10px; display: grid; gap: 1px; }
+.bname { font-weight: 900; color: var(--indigo); line-height: 1.2; }
+.binfo .sub { font-size: 12px; }
+.bprice { font-weight: 600; font-size: 15px; color: var(--indigo); margin-top: 4px; }
+.bprice.short { color: var(--down); }
