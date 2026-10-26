@@ -1,8 +1,8 @@
 // Pop-up sheet for one building: picture, details and the next action.
 import { building, stageOf, RENO_MONTHS } from '../city.js';
-import { yen } from '../format.js';
+import { yen, monthName, yearOf } from '../format.js';
 import { pic } from './pics.js';
-import { STAGES } from './city.js';
+import { STAGES, isFixed } from './city.js';
 
 // A choice card. hint is the small grey line; enabled=false greys it out.
 const choice = (act, id, label, hint, enabled = true) => `
@@ -23,9 +23,14 @@ function actions(b, stage, s) {
     case 'renovating':
       return `<p class="note">🔨 The builders are working. Ready next month.</p>`;
     case 'ready':
-      return choice('rent', b.id, `Rent out for ${yen(b.rent)}/mo`, 'List it and let tenants move in.');
-    case 'rented':
-      return `<p class="note">🏡 Tenants live here, paying ${yen(b.rent)} a month.</p>`;
+      return choice('rent', b.id, `Rent out for ${yen(b.rent)}/mo`, 'List it. Tenants will find it on their own, usually within a month or two.');
+    case 'listed':
+      return `<p class="note">🔎 Listed for ${yen(b.rent)}/mo. Waiting for someone to move in…</p>`;
+    case 'rented': {
+      const t = s.owned[b.id].tenant;
+      return `<div class="tcard">${pic(t.pic)}<div><b>${t.name}-san</b><span>${t.kind} · living here since ${monthName(t.since)}, Year ${yearOf(t.since)}</span>
+        <span>Pays <b class="mono">${yen(b.rent)}</b> a month</span></div></div>`;
+    }
   }
 }
 
@@ -33,7 +38,7 @@ export function drawSheet(el, s, id) {
   if (!id) { el.hidden = true; el.innerHTML = ''; return; }
   const b = building(id);
   const stage = stageOf(s, id);
-  const fixed = stage === 'ready' || stage === 'rented';
+  const fixed = isFixed(stage);
   el.hidden = false;
   el.innerHTML = `
     <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title">

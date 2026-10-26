@@ -10,24 +10,32 @@ export const STAGES = {
   rundown:    { tag: 'Needs work',    cls: 'old' },
   renovating: { tag: 'Renovating…',   cls: 'busy' },
   ready:      { tag: 'Ready to rent', cls: 'ready' },
+  listed:     { tag: 'Vacant',        cls: 'busy' },
   rented:     { tag: 'Rented',        cls: 'rented' },
 };
+
+export const isFixed = stage => ['ready', 'listed', 'rented'].includes(stage);
+
+function bottomLine(b, s, stage) {
+  if (stage === 'forsale') return `
+    <div class="bprice mono ${s.money < b.price ? 'short' : ''}">${yen(b.price)}</div>
+    <div class="sub">Rent after renovation <b class="mono">${yen(b.rent)}</b>/mo</div>`;
+  const t = s.owned[b.id].tenant;
+  if (t) return `<div class="tenant">${pic(t.pic)}<span><b>${t.name}-san</b><br>${t.kind}</span></div>`;
+  if (stage === 'listed') return `<div class="tenant none">🔎 Looking for tenants…</div>`;
+  return `<div class="sub">Rent <b class="mono">${yen(b.rent)}</b>/mo</div>`;
+}
 
 function buildingCard(b, s) {
   const stage = stageOf(s, b.id);
   const st = STAGES[stage];
-  const fixed = stage === 'ready' || stage === 'rented';
-  const line = stage === 'forsale'
-    ? `<div class="bprice mono ${s.money < b.price ? 'short' : ''}">${yen(b.price)}</div>
-       <div class="sub">Rent after renovation <b class="mono">${yen(b.rent)}</b>/mo</div>`
-    : `<div class="sub">Rent <b class="mono">${yen(b.rent)}</b>/mo</div>`;
   return `
     <button class="bcard" data-act="open" data-id="${b.id}">
-      <div class="bpic ${fixed ? '' : 'faded'}">${pic(b.pic)}<span class="tag ${st.cls}">${st.tag}</span></div>
+      <div class="bpic ${isFixed(stage) ? '' : 'faded'}">${pic(b.pic)}<span class="tag ${st.cls}">${st.tag}</span></div>
       <div class="binfo">
         <div class="bname">${b.name}</div>
         <div class="sub">${b.area} · ${b.type}</div>
-        ${line}
+        ${bottomLine(b, s, stage)}
       </div>
     </button>`;
 }

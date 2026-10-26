@@ -10,6 +10,13 @@ export const PICS = {
   afford: 'img/h_afford.webp',
   semid: 'img/h_semid.webp',
   flat: 'img/h_flat.webp',
+  // tenants
+  ten_office: 'img/partner_f__japanese.webp',
+  ten_student_m: 'img/partner_m__korean.webp',
+  ten_student_f: 'img/partner_f__korean.webp',
+  ten_musician: 'img/playboy__japanese.webp',
+  ten_designer: 'img/playgirl__japanese.webp',
+  ten_newlyweds: 'img/spouse_m__japanese.webp',
 };
 
 export const pic = (key, cls = '') => `<img class="${cls}" src="${PICS[key]}" alt="">`;

@@ -7,6 +7,7 @@ import { drawPanel } from './render/panel.js';
 import { drawSheet } from './render/sheet.js';
 import { createTimebar } from './render/timebar.js';
 import { rentFx, spendFx } from './render/fx.js';
+import { cityNews } from './render/toast.js';
 
 // Real seconds per in-game month.
 const SECONDS_PER_MONTH = 10;
@@ -29,9 +30,10 @@ function nextMonth() {
   s.month += 1;
   const before = s.money;
   const paid = collectRent(s);
-  cityMonth(s);
+  const news = cityMonth(s);
   render();
   rentFx(paid, before, s.money);
+  cityNews(news);
 }
 
 function update(dt) {
