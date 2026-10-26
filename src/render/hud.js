@@ -13,7 +13,7 @@ export function drawHud(el, s) {
         <div class="date"><b>${monthName(s.month)}</b><span>Year ${yearOf(s.month)}</span></div>
       </div>
       <div class="figures">
-        <span>Cash<b>${yen(s.money)}</b></span>
+        <span id="cash">Cash<b>${yen(s.money)}</b></span>
         <span>Rent / month<b>${yen(monthlyRent(s))}</b></span>
         <span>Properties<b>${ownedCount(s)}</b></span>
       </div>

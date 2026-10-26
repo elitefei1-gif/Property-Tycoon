@@ -37,6 +37,15 @@ export function rentOut(s, id) {
   return true;
 }
 
+// Pays rent for every rented building. Returns [{ id, amount }] for the money effects.
+export function collectRent(s) {
+  const paid = Object.entries(s.owned)
+    .filter(([, o]) => o.stage === 'rented')
+    .map(([id]) => ({ id, amount: building(id).rent }));
+  for (const p of paid) s.money += p.amount;
+  return paid;
+}
+
 // Called at the start of each month. Returns names of buildings that finished renovating.
 export function cityMonth(s) {
   const done = [];
