@@ -7,9 +7,9 @@ or a dashed box with the item's name), so pictures can be added one at a time.
 ## How to add a picture
 
 1. Make it with Gemini (prompts below).
-2. Send it to Claude with its name (for example "this is bed_2"), **or** run:
-   `python3 tools/prepare_art.py path/to/picture.png bed_2`
-3. The tool saves `img/room/bed_2.webp`. It crops room backgrounds to 4:3 and cuts the white
+2. Send it to Claude saying which one it is (for example "this is the beds sheet"), **or** run the tool
+   (commands below).
+3. The tool saves files like `img/room/bed_2.webp`. It crops room backgrounds to 4:3 and cuts the white
    background out of furniture, trimming the empty edges. Refresh the game to see it.
 
 ## Style (use in every prompt)
@@ -34,52 +34,33 @@ No furniture, no people, no text.
 | `office_bg` | Empty home office seen from the front. Back wall in pale sage green with a window in the middle-left, wooden floor. Keep the right side plain. No furniture. 4:3. |
 | `living_bg` | Empty Japanese living room seen from the front. Warm beige back wall with a large window with curtains in the middle, wooden floor with a little tatami area. Keep the left side plain. No furniture. 4:3. |
 
-## Furniture (18 pictures)
+## Furniture (6 sheets, 4 items each)
 
-Square (e.g. 1024×1024). **One item only, on a plain pure white background**, no floor, no shadow on the
-background, nothing else in the picture. Same front, slightly-from-above angle as the rooms.
-Items with white parts (bedding, paper) need a dark outline so they don't get cut out.
+To save effort, each Gemini picture holds one slot's items in a **2×2 grid**. The tool cuts them apart:
 
-Where each item sits is set in `src/data/upgrades.js` (`box`). Wide items fill a wide spot, tall items a tall one.
+`python3 tools/prepare_art.py bed_sheet.png bed_0 bed_1 bed_2 bed_3`
 
-### Bedroom
+Order is **top-left, top-right, bottom-left, bottom-right**. Sheets with 3 items leave the bottom-right empty.
+Square picture (e.g. 1024×1024), **plain pure white background**, items well apart so they don't touch,
+no floor, no shadows on the background, no text or labels. Same front, slightly-from-above angle as the rooms.
+White parts (bedding, paper) need a dark outline so they don't get cut out.
 
-| File | Item | Spot |
+Where each item sits in the room is set in `src/data/upgrades.js` (`box`).
+
+| Sheet | Prompt (after the style line) | Files (in grid order) |
 |---|---|---|
-| `bed_0` | A thin, flat futon on the floor with a small pillow, a bit worn | floor, left-centre, wide |
-| `bed_1` | A thick fluffy futon with a patterned duvet and two pillows | floor, left-centre, wide |
-| `bed_2` | A simple wooden single bed with a cosy quilt | floor, left-centre, wide |
-| `bed_3` | A luxurious king-size bed with a padded headboard and many pillows | floor, left-centre, wide |
-| `bdeco_1` | A cute cartoon cat poster pinned to the wall | on the wall, top-right |
-| `bdeco_2` | A wooden frame holding a happy family photo | on the wall, top-right |
-| `bdeco_3` | A framed ukiyo-e wave print (Great Wave style) | on the wall, top-right |
+| Beds | A 2×2 grid of four separate beds on a plain white background, each centred in its own quarter with lots of white space between them. Top-left: a thin, flat, slightly worn futon on the floor with a small pillow. Top-right: a thick fluffy futon with a patterned duvet and two pillows. Bottom-left: a simple wooden single bed with a cosy quilt. Bottom-right: a luxurious king-size bed with a padded headboard and many pillows. All seen from the front, slightly from above, same scale. No floor, no shadows, no text. | `bed_0 bed_1 bed_2 bed_3` |
+| Bedroom wall art | A 2×2 grid on a plain white background, three wall decorations, each centred in its own quarter, the bottom-right quarter left empty. Top-left: a cute cartoon cat poster. Top-right: a wooden frame with a happy family photo. Bottom-left: a framed ukiyo-e wave print in the style of the Great Wave. Seen straight from the front. No wall, no shadows, no text. | `bdeco_1 bdeco_2 bdeco_3` |
+| Desks | A 2×2 grid of four separate desks on a plain white background, each centred in its own quarter with lots of white space between them. Top-left: a low wooden Japanese table with a floor cushion and a notebook. Top-right: a small study desk with a chair, a lamp and books. Bottom-left: a desk with a computer monitor, keyboard and an office chair. Bottom-right: a big executive desk in dark wood with two monitors and a leather chair. All seen from the front, slightly from above, same scale. No floor, no shadows, no text. | `desk_0 desk_1 desk_2 desk_3` |
+| Office corner | A 2×2 grid on a plain white background, three tall items, each centred in its own quarter, the bottom-right quarter left empty. Top-left: a potted plant in a ceramic pot. Top-right: a tall wooden bookshelf full of books and folders. Bottom-left: a bonsai tree on a wooden display stand. Seen from the front, slightly from above. No floor, no shadows, no text. | `odeco_1 odeco_2 odeco_3` |
+| Seating | A 2×2 grid of four separate living-room seating sets on a plain white background, each centred in its own quarter with lots of white space between them. Top-left: a single flat Japanese floor cushion (zabuton). Top-right: a kotatsu table with a quilt and a bowl of mikan oranges. Bottom-left: a comfy fabric sofa with cushions and a small coffee table. Bottom-right: a big leather sofa set with a glass coffee table. All seen from the front, slightly from above, same scale. No floor, no shadows, no text. | `sofa_0 sofa_1 sofa_2 sofa_3` |
+| Living room corner | A 2×2 grid on a plain white background, three tall items, each centred in its own quarter, the bottom-right quarter left empty. Top-left: a Japanese paper floor lamp (andon) glowing softly. Top-right: a big flat-screen TV on a low wooden TV stand. Bottom-left: a large koi fish aquarium on a wooden cabinet. Seen from the front, slightly from above. No floor, no shadows, no text. | `ldeco_1 ldeco_2 ldeco_3` |
 
-### Home office
-
-| File | Item | Spot |
-|---|---|---|
-| `desk_0` | A low wooden Japanese table with a floor cushion and a notebook | floor, centre |
-| `desk_1` | A small study desk with a chair, a lamp and books | floor, centre |
-| `desk_2` | A desk with a computer monitor, keyboard and an office chair | floor, centre |
-| `desk_3` | A big executive desk in dark wood with two monitors and a leather chair | floor, centre |
-| `odeco_1` | A potted plant in a ceramic pot | floor, right corner, tall |
-| `odeco_2` | A tall wooden bookshelf full of books and folders | floor, right corner, tall |
-| `odeco_3` | A bonsai tree on a wooden display stand | floor, right corner, tall |
-
-### Living room
-
-| File | Item | Spot |
-|---|---|---|
-| `sofa_0` | A single flat floor cushion (zabuton) | floor, centre-right, wide |
-| `sofa_1` | A kotatsu table with a quilt and a bowl of mikan oranges | floor, centre-right, wide |
-| `sofa_2` | A comfy fabric sofa with cushions and a small coffee table | floor, centre-right, wide |
-| `sofa_3` | A big leather sofa set with a glass coffee table | floor, centre-right, wide |
-| `ldeco_1` | A paper floor lamp (andon style), glowing softly | floor, left corner, tall |
-| `ldeco_2` | A big flat-screen TV on a low wooden TV stand | floor, left corner, tall |
-| `ldeco_3` | A large koi fish aquarium on a wooden cabinet | floor, left corner, tall |
+One picture per item still works too: `python3 tools/prepare_art.py picture.png bed_2`.
 
 ## Tips
 
 - If Gemini adds a floor or shadow under furniture, ask it to "remove the floor and shadow, plain white background only".
+- If items in a sheet touch each other or cross the middle lines, ask Gemini to "make the items smaller with more white space between them".
 - If an item looks too big or small in the room, the spot can be changed in `src/data/upgrades.js`.
 - Level 0 of the wall art and corner slots is "nothing", so they need no picture.

@@ -1,8 +1,11 @@
-"""Turn a generated picture into a game-ready file in img/room/.
+"""Turn a generated picture into game-ready files in img/room/.
 
     python3 tools/prepare_art.py <picture> <name>
+    python3 tools/prepare_art.py <sheet> <name1> <name2> <name3> [<name4>]
 
   <name> is the file name from ART.md without .webp, e.g. bed_1 or bedroom_bg.
+  With 2-4 names, the picture is a 2x2 grid of items, read left to right, top to bottom
+  (top-left, top-right, bottom-left, bottom-right). It's split along the white gaps between them.
 
 Room backgrounds (names ending in _bg) are cropped to 4:3 and resized to 1200x900.
 Furniture: the plain white (or light) background around the item is made transparent,
@@ -57,16 +60,44 @@ def furniture(img):
     return out
 
 
-def main():
-    if len(sys.argv) != 3:
-        sys.exit(__doc__)
-    src, name = Path(sys.argv[1]), sys.argv[2].removesuffix('.webp')
-    img = Image.open(src)
-    out = background(img) if name.endswith('_bg') else furniture(img)
+def gap(img, axis):
+    """Where to split a sheet: the whitest line across the middle third (axis 0 = vertical line)."""
+    g = img.convert('L')
+    w, h = g.size
+    length = w if axis == 0 else h
+    best, best_score = length // 2, -1
+    for i in range(length // 3, 2 * length // 3):
+        line = g.crop((i, 0, i + 1, h) if axis == 0 else (0, i, w, i + 1))
+        score = sum(line.histogram()[236:])  # light pixels on this line
+        if score > best_score:
+            best, best_score = i, score
+    return best
+
+
+def split_sheet(img):
+    """Cut a 2x2 grid into [top-left, top-right, bottom-left, bottom-right]."""
+    w, h = img.size
+    x, y = gap(img, 0), gap(img, 1)
+    return [img.crop(box) for box in ((0, 0, x, y), (x, 0, w, y), (0, y, x, h), (x, y, w, h))]
+
+
+def save(out, name):
     OUT.mkdir(parents=True, exist_ok=True)
     dest = OUT / f'{name}.webp'
     out.save(dest, 'WEBP', quality=88, method=6)
     print(f'Saved {dest.relative_to(OUT.parent.parent)} ({out.size[0]}x{out.size[1]})')
+
+
+def main():
+    if not 3 <= len(sys.argv) <= 6:
+        sys.exit(__doc__)
+    img = Image.open(sys.argv[1])
+    names = [n.removesuffix('.webp') for n in sys.argv[2:]]
+    if len(names) == 1:
+        save(background(img) if names[0].endswith('_bg') else furniture(img), names[0])
+        return
+    for part, name in zip(split_sheet(img), names):
+        save(furniture(part), name)
 
 
 if __name__ == '__main__':
