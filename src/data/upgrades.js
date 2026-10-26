@@ -31,9 +31,9 @@ export const ROOMS = [
       { name: 'Executive desk', cost: 2_000_000, img: room('desk_3') } ] },
     { id: 'odeco', name: 'Corner', icon: '📚', box: { x: 60, y: 22, w: 18, h: 48 }, levels: [
       { name: 'Empty corner', cost: 0, img: null },
-      { name: 'Potted plant', cost: 40_000, img: room('odeco_1') },
+      { name: 'Potted plant', cost: 40_000, img: room('odeco_1'), size: 0.7 },
       { name: 'Bookshelf', cost: 300_000, img: room('odeco_2') },
-      { name: 'Bonsai display', cost: 1_200_000, img: room('odeco_3') } ] },
+      { name: 'Bonsai display', cost: 1_200_000, img: room('odeco_3'), size: 0.8 } ] },
   ] },
   { id: 'living', name: 'Living room', pic: 'room_living', bg: room('living_bg'), slots: [
     { id: 'sofa', name: 'Seating', icon: '🛋️', box: { x: 30, y: 50, w: 44, h: 42 }, levels: [
